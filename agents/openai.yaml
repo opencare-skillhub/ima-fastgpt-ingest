@@ -1,0 +1,4 @@
+interface:
+  display_name: "IMA 到 FastGPT 知识接入"
+  short_description: "评估IMA原文权限，设计MinerU解析、增量入库及向量检索验收"
+  default_prompt: "使用 $ima-fastgpt-ingest 评估这个IMA共享库接入FastGPT的路径，并区分接口证据、实际权限和待验证项。"
