@@ -26,3 +26,5 @@ qa-reports/
 data/
 logs/
 *.log
+# Local source documents, MinerU results, and upload artifacts are private.
+/output/

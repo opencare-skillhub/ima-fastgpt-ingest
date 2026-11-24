@@ -136,7 +136,9 @@ MinerU 的“批量”不表示一次 HTTP 请求上传全部字节，也不表�
 | `fastgpt-content-processor` | 本地 Markdown 清洗、标签、QA；本流程不传 `--dataset-id` |
 | `fastgpt-kb-sync` | 唯一正式上传入口：去重、增量同步、状态核对及检索检查 |
 
-这两个技能不是本仓库捆绑依赖，也不自带 MinerU 解析。先完成一份样本验收，再按当前额度组批。**QA 输出目录可能包含未通过文件，不能整目录直接上传**；只同步评分及专业审核通过的 `approved/`。
+这两个技能不是本仓库捆绑依赖，也不自带 MinerU 解析。先完成一份样本验收，再按当前额度组批。**QA 输出目录可能包含未通过文件，不能整目录直接上传**；上传范围由独立准入清单确定。默认参考质量评分；用户明确要求忽略85分门槛时，记录本次任务的豁免，保留真实评分与待审校标记后入库，不将其写成专业审核通过。
+
+MinerU解析后的 Markdown、图片和版面信息统一保存在**当前项目的 `output/`**，例如 `output/<任务>/parsed/`；入库用文本保存到 `output/<任务>/fastgpt/`。本地落盘与上传可以同时完成，已有解析结果直接复用。`output/` 已被 Git 忽略，其中的资料不随公开技能仓库发布。
 
 详细说明：[架构与成功标准](references/architecture.md)、[API 契约](references/api-contracts.md)、[既有工具复用](references/tool-reuse.md)。
 
