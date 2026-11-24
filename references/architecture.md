@@ -8,11 +8,13 @@
 
 ```text
 DISCOVERED → ACCESS_VERIFIED → DOWNLOADED → PARSE_SUBMITTED
-→ PARSED → QA_PASSED → UPLOADED → INDEX_READY
-→ RETRIEVAL_VERIFIED → PUBLISHED
+→ PARSED → CONTENT_READY → UPLOADED → INTEGRITY_VERIFIED
+→ INDEX_READY → RETRIEVAL_VERIFIED → KB_AVAILABLE
 ```
 
 区别AUTH_REQUIRED、ACCESS_DENIED、CONTENT_UNAVAILABLE、INVENTORY_INCOMPLETE、PARSE_FAILED、QA_REJECTED和INDEX_FAILED。网络失败不计为零内容，上传成功不计为索引完成。
+
+CONTENT_READY记录当次内容范围、评分策略及审核状态，不将某个固定分数设为所有任务的必经条件。KB_AVAILABLE表示资料在指定部署实例的知识库中可用；应用工作流/发布渠道变更属于另一个可选状态APP_PUBLISHED，需要该范围的授权，不能因“发布到FastGPT实例”自动修改应用或重启机器人。
 
 账本记录来源系统、库ID、媒体ID、原件hash、解析配置版本、任务ID、集合ID、审核和发布状态，不记录签名URL/header。按稳定标识和hash去重；同名不同文件不能合并。媒体ID变化只能提出更新候选，不能仅按标题覆盖。
 
@@ -21,6 +23,8 @@ DISCOVERED → ACCESS_VERIFIED → DOWNLOADED → PARSE_SUBMITTED
 ## 内容质量
 
 保留源文件、未经修改MD、章节/页码映射和解析版本。药名、剂量、单位、否定词和复杂表格须抽查，任何OCR模型都不能承诺零错误。页码无法核对时只引用书名/章节，不估算页码。
+
+默认保留医学正文；要点、QA和标签是同源辅助产物，不能替代正文或覆盖其去重身份。逐书保留删除明细和原文量，上传后比较本地hash/字节/字符与远端元数据；要点需绑定正文版本与原页引文。执行格式见[正文与要点保真](content-fidelity.md)。
 
 医疗资料分病种、证据类型、地区及版本。旧教材不能覆盖当前指南，研究进展不等于已批准疗法，跨癌种章节不能直接外推。图谱图片与HTML表格在清洗前后核对。通用QA分数不代替专业审核。
 
@@ -40,3 +44,5 @@ DISCOVERED → ACCESS_VERIFIED → DOWNLOADED → PARSE_SUBMITTED
 4. 中断后按检查点恢复，不从头重新解析全部文件。
 5. 索引训练完成后，用已知答案检索，核对正确来源与版本。
 6. 真实应用回答简洁、可追溯，无可靠证据时明确不足；医疗场景急症就医提示优先。
+
+第6项仅在任务包含应用接入/发布时执行并单独报告；只完成知识库入库时明确尚未进行应用端测试。

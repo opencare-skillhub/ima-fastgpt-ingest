@@ -1,6 +1,6 @@
 ---
 name: ima-fastgpt-ingest
-description: 评估或设计IMA共享知识库接入FastGPT，核对原文API权限，规划MinerU批量解析、内容审核、增量入库与embedding验收。适用于IMA到FastGPT迁移和同步，不用于普通笔记写入。
+description: 将IMA资料接入FastGPT，核对原文权限，组织MinerU批量解析、正文保真与要点索引、增量入库及embedding验收。适用于IMA到FastGPT迁移和同步，不用于普通笔记写入。
 license: MIT
 ---
 
@@ -33,6 +33,7 @@ python3 scripts/ima_probe.py --check-credentials
 - [架构与验收](references/architecture.md)：版本、失败恢复、内容审核及发布。
 - [既有工具复用](references/tool-reuse.md)：复用processor与fgkb，不重复实现其已有功能。
 - [真实链路经验](references/e2e-lessons.md)：页数限制、低分清理重评、清洗后来源校验、先验新版本再退旧版与输出脱敏。
+- [正文与要点保真](references/content-fidelity.md)：完整正文加可选要点、引文侧车、逐书核验字段和离线核验脚本；实际清理和入库时读取。
 
 ## 来源只读预检
 
@@ -57,5 +58,7 @@ processor只做清洗/QA，不传dataset-id；qa-output也含未通过资料，�
 患者生活/励志故事与医学病例不同：用户要求去掉故事时，去除明确的个人生活叙事；医学病历、检查结果、诊疗过程、病例讨论及医学分析仍属正文，应保留。按段落核对，不因“病例”“例如”或人物称呼等关键词删除整页、整章。表格、公式、图注、参考文献和原图附件应保留，未知解析块不能静默丢弃。
 
 输出逐书删除明细与正文保留量，上传后对比远端原文长度、文件字节数与本地正文；检索成功不能代替完整性核对。替换旧节选或测试样本时先上传并验证正文版，再只退役账本中本次创建的旧条目，避免旧525字样本被误认为完整书籍。
+
+要点可作为同源的导读与检索侧车，绑定正文hash、原页及逐字引文，不替代或覆盖正文。要点是否生成、额外上传按用户需求决定；概括须保留条件、否定词与风险边界，不能新增医学结论。需要核验文件和脱敏远端快照时运行`scripts/verify_content_manifest.py`，具体格式与限制见[保真说明](references/content-fidelity.md)。
 
 报告分别列明目录观察、API鉴权、原件下载、解析、上传、索引完成、检索测试、工作流发布。上传成功不代替embedding完成；通用QA评分不代替医学审核。使用医疗材料时保留就医提醒及简短AI风险提示，不把旧教材或其他癌种方案外推给患者。
