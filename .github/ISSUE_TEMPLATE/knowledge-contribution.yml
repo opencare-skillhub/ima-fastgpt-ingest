@@ -1,0 +1,46 @@
+name: 知识库共建申请
+description: 贡献有权分享的知识库或资料；请先阅读知识产权授权协议。
+title: "[共建申请] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        欢迎参与共建！提交前请阅读[知识库共建与知识产权授权协议（1.0，2026-11-24）](https://github.com/opencare-skillhub/ima-fastgpt-ingest/blob/main/docs/KNOWLEDGE_CONTRIBUTION_AGREEMENT.md)。
+        该协议涉及社区使用授权、您的知识产权保证、责任承担、第三方技术处理及撤回规则。不同意请勿提交，可先要求说明。
+        **这是公开Issue：请勿填写API Key、Token、密码、非公开共享链接、授权证明、个人联系方式或患者资料。**
+  - type: input
+    id: name
+    attributes:
+      label: 知识库或资料名称
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 主题与拟贡献范围
+      description: 说明主题、约多少份资料、全部还是指定章节，以及用途。不要提交原文或私密链接。
+    validations:
+      required: true
+  - type: textarea
+    id: rights
+    attributes:
+      label: 来源、版本与权利依据概述
+      description: 说明原创、有效转授权、开放许可或仅提供公开线索；证明材料请待约定私密渠道后提交。
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: 署名偏好
+      description: 可使用昵称或机构名；不要求公开真实身份。
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 我已阅读并接受协议1.0（2026-11-24），允许社区在协议约定的公益服务范围内使用拟贡献资料。
+          required: true
+        - label: 我对所述资料来源、知识产权及授权真实性负责；如仅提供线索，已明确说明且不授权无权提供的原文。
+          required: true
+        - label: 我未在此公开Issue填写密钥、私密链接、权利证明或患者个人信息。
+          required: true
