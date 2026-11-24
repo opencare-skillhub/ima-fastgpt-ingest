@@ -32,6 +32,7 @@ python3 scripts/ima_probe.py --check-credentials
 - [API契约](references/api-contracts.md)：来源核验、下载与平台接口。
 - [架构与验收](references/architecture.md)：版本、失败恢复、内容审核及发布。
 - [既有工具复用](references/tool-reuse.md)：复用processor与fgkb，不重复实现其已有功能。
+- [真实链路经验](references/e2e-lessons.md)：页数限制、低分清理重评、清洗后来源校验、先验新版本再退旧版与输出脱敏。
 
 ## 来源只读预检
 
